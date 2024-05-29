@@ -10,13 +10,13 @@ namespace Mango.Services.CouponAPI.Controllers
     [Route("api/coupon")]
     [ApiController]
     [Authorize]
-    public class CouponController : ControllerBase
+    public class CouponAPIController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
         private readonly ResponseDto _response;
         private readonly IMapper _mapper;
 
-        public CouponController(ApplicationDbContext db, IMapper mapper)
+        public CouponAPIController(ApplicationDbContext db, IMapper mapper)
         {
             _db = db;
             _response = new ResponseDto();
