@@ -105,11 +105,13 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
             try
             {
                 await _messageBus.PublishMessage(cartDto, _configuration.GetValue<string>("TopicAndQueueNames:EmailShoppingCartQueue"));
+
                 _response.Result = true;
             }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
+
                 _response.Message = ex.ToString();
             }
             return _response;
@@ -123,6 +125,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
             {
                 var cartHeaderFromDb = await _db.CartHeaders.AsNoTracking()
                     .FirstOrDefaultAsync(u => u.UserId == cartDto.CartHeader.UserId);
+
                 if (cartHeaderFromDb == null)
                 {
                     //create header and details
@@ -135,6 +138,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
                     cartDto.CartDetails.First().CartHeaderId = cartHeader.CartHeaderId;
 
                     _db.CartDetails.Add(_mapper.Map<CartDetails>(cartDto.CartDetails.First()));
+
                     await _db.SaveChangesAsync();
                 }
                 else
@@ -188,6 +192,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 
                 int totalCountofCartItem = _db.CartDetails.Where(u => u.CartHeaderId == cartDetails.CartHeaderId).Count();
                 _db.CartDetails.Remove(cartDetails);
+
                 if (totalCountofCartItem == 1)
                 {
                     var cartHeaderToRemove = await _db.CartHeaders
@@ -195,6 +200,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 
                     _db.CartHeaders.Remove(cartHeaderToRemove);
                 }
+
                 await _db.SaveChangesAsync();
 
                 _response.Result = true;
@@ -202,6 +208,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
             catch (Exception ex)
             {
                 _response.Message = ex.Message.ToString();
+
                 _response.IsSuccess = false;
             }
             return _response;
