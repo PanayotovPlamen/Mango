@@ -1,17 +1,7 @@
-﻿namespace Mango.Web.Utility
+﻿namespace Mango.Services.OrderAPI.Utility
 {
     public class SD
     {
-        public static string CouponAPIBase { get; set; }
-
-        public static string AuthAPIBase { get; set; }
-
-        public static string ProductAPIBase { get; set; }
-
-		public static string ShoppingCartAPIBase { get; set; }
-
-		public static string OrderAPIBase { get; set; }
-
         public const string Status_Pending = "Pending";
         public const string Status_Approved = "Approved";
         public const string Status_ReadyForPickup = "ReadyForPickup";
@@ -21,6 +11,5 @@
 
         public const string RoleAdmin = "ADMIN";
         public const string RoleCustomer = "CUSTOMER";
-        public const string TokenCookie = "JWTToken";
     }
 }
